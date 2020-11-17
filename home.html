@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+  <script src="pixi.min.js"></script>
+<body>
+  <script type="text/javascript">
+    // let type = "WebGL"
+    // if(!PIXI.utils.isWebGLSupported()){
+    //   type = "canvas"
+    // }
+
+    // PIXI.utils.sayHello(type)
+    let app = new PIXI.Application({ 
+    width: 650,         // default: 800
+    height: 650,        // default: 600
+    antialias: true,    // default: false
+    transparent: false, // default: false
+    resolution: 1       // default: 1
+  }
+
+);
+
+var tween,red,green,yellow,blue;
+document.body.appendChild(app.view);
+app.renderer.backgroundColor = "white";
+PIXI.loader
+  .add([
+    "images/red.png",
+    "images/blue.png",
+    "images/yellow.jpg",
+    "images/green.png"
+  ])
+  .load(setup);
+
+
+//This `setup` function will run when the image has loaded
+let map = new Map();
+function setup() {
+
+//Create the `cat` sprite
+ red = new PIXI.Sprite(PIXI.loader.resources["images/red.png"].texture);
+
+//Change the sprite's position
+red.x = 0;
+red.y = 0;
+
+//Change the sprite's size
+red.width = 256;
+red.height = 256;
+
+//Add the cat to the stage so you can see it
+app.stage.addChild(red);
+ blue = new PIXI.Sprite(PIXI.loader.resources["images/blue.png"].texture);
+
+//Change the sprite's position
+blue.x = 306;
+blue.y = 0;
+
+//Change the sprite's size
+blue.width = 256;
+blue.height = 256;
+
+//Add the cat to the stage so you can see it
+app.stage.addChild(blue);
+
+ yellow = new PIXI.Sprite(PIXI.loader.resources["images/yellow.jpg"].texture);
+
+//Change the sprite's position
+yellow.x = 0;
+yellow.y = 306;
+
+//Change the sprite's size
+yellow.width = 256;
+yellow.height = 256;
+
+//Add the cat to the stage so you can see it
+app.stage.addChild(yellow);
+ green = new PIXI.Sprite(PIXI.loader.resources["images/green.png"].texture);
+
+//Change the sprite's position
+green.x = 306;
+green.y = 306;
+
+//Change the sprite's size
+green.width = 256;
+green.height = 256;
+
+//Add the cat to the stage so you can see it
+app.stage.addChild(green);
+map.set(1, red);     
+map.set(2, blue); 
+map.set(3, green);     
+map.set(4, yellow); 
+red.interactive = true;
+red.on('mousedown', onDown);
+red.on('mouseup', onUp);
+red.on('touchstart', onDown1);
+blue.interactive = true;
+blue.on('mousedown', onDown1);
+blue.on('mouseup', onUp1);
+blue.on('touchstart', onDown1);
+green.interactive = true;
+green.on('mousedown', onDown2);
+green.on('mouseup', onUp2);
+green.on('touchstart', onDown2);
+yellow.interactive = true;
+yellow.on('mousedown', onDown3);
+yellow.on('mouseup', onUp3);
+yellow.on('touchstart', onDown3);
+
+}
+
+function loadProgressHandler() {
+  console.log("loading"); 
+}
+
+play();
+
+
+function onDown (eventData) {
+red.alpha=0.5
+console.log(red)
+}
+function onDown1 (eventData) {
+
+  blue.alpha=0.5
+  console.log(blue)
+}
+function onDown2 (eventData) {
+  green.alpha=0.5
+  console.log(green)
+}
+function onDown3 (eventData) {
+  yellow.alpha=0.5
+  console.log(yellow)
+}
+function onUp (eventData) {
+red.alpha=1;
+console.log(red)
+}
+function onUp1 (eventData) {
+  blue.alpha=1;
+  console.log(blue)
+}
+function onUp2 (eventData) {
+  green.alpha=1;
+  console.log(green)
+}
+function onUp3 (eventData) {
+  yellow.alpha=1;
+  console.log(yellow)
+}
+function play()
+{
+    requestAnimationFrame(play);
+
+    // render the root container
+    app.renderer.render(app.stage);
+}
+// function animate() {
+// 			for(let i=1;i<=4;i++)
+//             {
+//                 let value=map.get(i);
+//                 tween = new TWEEN.Tween(position)
+//               .to({ alpha: 1, alpha: 0.5}, 1000)
+//               .delay(1000)
+//               .easing(TWEEN.Easing.Elastic.InOut)
+//               .onUpdate(update(value));
+
+//               //   value.alpha=0.5;
+//               //   console.log(value);
+//               //   let t=2;
+//               //   while(t>0)
+//               //   {
+//               //       t--;
+//               //   }
+//               //  value.alpha=1
+//                 // requestAnimationFrame(animate);
+//             }
+// 		}
+//         console.log("fhdkh")
+
+//         function update(value) {
+//           value.alpha = 1
+  
+
+  </script>
+</body>
+</html>
