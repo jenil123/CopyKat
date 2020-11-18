@@ -5,6 +5,8 @@
   <title>Hello World</title>
 </head>
   <script src="pixi.min.js"></script>
+  <script src="https://unpkg.com/pixi-charm/dist/charm.min.js"></script>
+  <script src="charm.js"></script>
 <body>
   <script type="text/javascript">
     // let type = "WebGL"
@@ -22,8 +24,8 @@
   }
 
 );
-
-var tween,red,green,yellow,blue;
+let c = new Charm(PIXI);
+let tween,red,green,yellow,blue;
 document.body.appendChild(app.view);
 app.renderer.backgroundColor = "white";
 PIXI.loader
@@ -38,12 +40,21 @@ PIXI.loader
 
 //This `setup` function will run when the image has loaded
 let map = new Map();
+red = new PIXI.Sprite(PIXI.loader.resources["images/red.png"].texture);
+blue = new PIXI.Sprite(PIXI.loader.resources["images/blue.png"].texture);
+yellow = new PIXI.Sprite(PIXI.loader.resources["images/yellow.jpg"].texture);
+green = new PIXI.Sprite(PIXI.loader.resources["images/green.png"].texture);
+
 function setup() {
 
 //Create the `cat` sprite
- red = new PIXI.Sprite(PIXI.loader.resources["images/red.png"].texture);
-
+ 
+red = new PIXI.Sprite(PIXI.loader.resources["images/red.png"].texture);
+blue = new PIXI.Sprite(PIXI.loader.resources["images/blue.png"].texture);
+yellow = new PIXI.Sprite(PIXI.loader.resources["images/yellow.jpg"].texture);
+green = new PIXI.Sprite(PIXI.loader.resources["images/green.png"].texture);
 //Change the sprite's position
+console.log(red)
 red.x = 0;
 red.y = 0;
 
@@ -53,8 +64,7 @@ red.height = 256;
 
 //Add the cat to the stage so you can see it
 app.stage.addChild(red);
- blue = new PIXI.Sprite(PIXI.loader.resources["images/blue.png"].texture);
-
+ 
 //Change the sprite's position
 blue.x = 306;
 blue.y = 0;
@@ -66,7 +76,7 @@ blue.height = 256;
 //Add the cat to the stage so you can see it
 app.stage.addChild(blue);
 
- yellow = new PIXI.Sprite(PIXI.loader.resources["images/yellow.jpg"].texture);
+ 
 
 //Change the sprite's position
 yellow.x = 0;
@@ -78,8 +88,7 @@ yellow.height = 256;
 
 //Add the cat to the stage so you can see it
 app.stage.addChild(yellow);
- green = new PIXI.Sprite(PIXI.loader.resources["images/green.png"].texture);
-
+ 
 //Change the sprite's position
 green.x = 306;
 green.y = 306;
@@ -116,76 +125,93 @@ yellow.on('touchstart', onDown3);
 function loadProgressHandler() {
   console.log("loading"); 
 }
+var time =1;
+var count=time;
+// function animate(cnt)
+// {
+//   while(cnt!=0)
+//   {
+//     let value=Math.floor(Math.random() * 4)+1;
+//     if(value==1)
+//     {
+//       console.log(red)
+//       c.fadeOut(red);
+//       c.fadeIn(red);
+//     } 
+//     else if(value==2)
+//     {
+//       c.fadeOut(blue);
+//       c.fadeIn(blue);
+//     } 
+//     else if(value==3)
+//     {
+//       c.fadeOut(green);
+//       c.fadeIn(green);
+//     } 
+//     else{
+//       c.fadeOut(yellow);
+//       c.fadeIn(yellow);
+//     }
+//     requestAnimationFrame(animate);
 
+//   //Update charm
+//     c.update();
+//   }
+
+// }
+// animate()//animate(count);
 play();
+function play(){
+      requestAnimationFrame(play)
+    // render the root container
+    app.renderer.render(app.stage);
+    //setTimeout(play, 1000);
+    }
 
 
 function onDown (eventData) {
 red.alpha=0.5
-console.log(red)
 }
 function onDown1 (eventData) {
 
   blue.alpha=0.5
-  console.log(blue)
 }
 function onDown2 (eventData) {
   green.alpha=0.5
-  console.log(green)
 }
 function onDown3 (eventData) {
   yellow.alpha=0.5
-  console.log(yellow)
 }
 function onUp (eventData) {
 red.alpha=1;
-console.log(red)
+count--;
+check(count);
 }
 function onUp1 (eventData) {
   blue.alpha=1;
-  console.log(blue)
+  count--;
+  check(count);
 }
 function onUp2 (eventData) {
   green.alpha=1;
-  console.log(green)
+  count--;
+  check(count);
 }
 function onUp3 (eventData) {
   yellow.alpha=1;
-  console.log(yellow)
+  count--;
+  check(count);
 }
-function play()
-{
-    requestAnimationFrame(play);
-
-    // render the root container
-    app.renderer.render(app.stage);
+function check(couunt){
+  if(count<=0)
+  {
+    console.log("Round", time, "done");
+    time++;
+    count=time;
+    //animate(count)
+  }
 }
-// function animate() {
-// 			for(let i=1;i<=4;i++)
-//             {
-//                 let value=map.get(i);
-//                 tween = new TWEEN.Tween(position)
-//               .to({ alpha: 1, alpha: 0.5}, 1000)
-//               .delay(1000)
-//               .easing(TWEEN.Easing.Elastic.InOut)
-//               .onUpdate(update(value));
 
-//               //   value.alpha=0.5;
-//               //   console.log(value);
-//               //   let t=2;
-//               //   while(t>0)
-//               //   {
-//               //       t--;
-//               //   }
-//               //  value.alpha=1
-//                 // requestAnimationFrame(animate);
-//             }
-// 		}
-//         console.log("fhdkh")
-
-//         function update(value) {
-//           value.alpha = 1
-  
 
   </script>
 </body>
