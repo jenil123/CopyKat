@@ -4,8 +4,12 @@
   <meta charset="utf-8">
 </head>
   <script src="pixi.min.js"></script>
-  <script src="https://unpkg.com/pixi-charm/dist/charm.min.js"></script>
-  <script src="charm.js"></script>
+  <script src="Tween.js"></script>
+  <script src="https://code.createjs.com/1.0.0/tweenjs.min.js"></script>
+  <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+
+
+  <!-- <script src="./node_modules/pixi-tween/src/TweenManager.js"></script> -->
 <body>
   <script type="text/javascript">
     // let type = "WebGL"
@@ -14,6 +18,8 @@
     // }
 
     // PIXI.utils.sayHello(type)
+    // import tweenManager from pixi-tween;
+    // let TweenManager=new TweenManager()
     let app = new PIXI.Application({ 
     width: 650,         // default: 800
     height: 650,        // default: 600
@@ -23,8 +29,7 @@
   }
 
 );
-let c = new Charm(PIXI);
-let tween,red,green,yellow,blue;
+let red,green,yellow,blue;
 document.body.appendChild(app.view);
 app.renderer.backgroundColor = "white";
 PIXI.loader
@@ -39,6 +44,10 @@ PIXI.loader
 
 //This `setup` function will run when the image has loaded
 let map = new Map();
+
+
+var seconds = 0;
+
 red = new PIXI.Sprite(PIXI.loader.resources["images/red.png"].texture);
 blue = new PIXI.Sprite(PIXI.loader.resources["images/blue.png"].texture);
 yellow = new PIXI.Sprite(PIXI.loader.resources["images/yellow.jpg"].texture);
@@ -118,53 +127,66 @@ yellow.interactive = true;
 yellow.on('mousedown', onDown3);
 yellow.on('mouseup', onUp3);
 yellow.on('touchstart', onDown3);
+getSequence();
 
 }
+const timer = ms => new Promise(res => setTimeout(res, ms))
 
 function loadProgressHandler() {
   console.log("loading"); 
 }
 var time =1;
 var count=time;
-// function animate(cnt)
-// {
-//   while(cnt!=0)
-//   {
-//     let value=Math.floor(Math.random() * 4)+1;
-//     if(value==1)
-//     {
-//       console.log(red)
-//       c.fadeOut(red);
-//       c.fadeIn(red);
-//     } 
-//     else if(value==2)
-//     {
-//       c.fadeOut(blue);
-//       c.fadeIn(blue);
-//     } 
-//     else if(value==3)
-//     {
-//       c.fadeOut(green);
-//       c.fadeIn(green);
-//     } 
-//     else{
-//       c.fadeOut(yellow);
-//       c.fadeIn(yellow);
-//     }
-//     requestAnimationFrame(animate);
+let sequence=[];
+function getSequence()
+{
+  let value=Math.floor(Math.random() * 4)+1;
+  console.log(red);
 
-//   //Update charm
-//     c.update();
-//   }
+  if(value==1)
+  {
+    sequence.push(red);
+  }
+  else if(value==2)
+  {
+    sequence.push(blue);
+  }
+  else if(value==3)
+  {
+    sequence.push(green);
+  }
+  else{
+    sequence.push(yellow);
+  }
+  console.log("sequence",sequence);
+  animate(sequence);
+}
+async function animate(sequence)
+{
+    for(let i=0;i<sequence.length;i++)
+    {
 
-// }
-// animate()//animate(count);
-play();
-function play(){
-      requestAnimationFrame(play)
-    // render the root container
-    app.renderer.render(app.stage);
-    //setTimeout(play, 1000);
+      play(sequence[i]);
+      await timer(2000);
+
+    }
+}
+
+  function play(sq){
+   var raf;
+    if (sq.alpha>0.5) {
+              sq.alpha = 0.5;
+            raf =  requestAnimationFrame(()=>play(sq));
+
+            }
+            else{
+              setTimeout(function(){
+                sq.alpha =1;
+              cancelAnimationFrame(raf);
+              },1000);
+              
+            }
+            app.renderer.render(app.stage);
     }
 
 
@@ -207,10 +229,15 @@ function check(couunt){
     console.log("Round", time, "done");
     time++;
     count=time;
-    //animate(count)
+    setTimeout(function(){
+      getSequence();
+},300);
   }
-}
 
+}
+setInterval(function () {
+  seconds++;
+}, 1);
 
   </script>
 </body>
