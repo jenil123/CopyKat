@@ -8,25 +8,14 @@
   <script src="Tween.js"></script>
   <script src="https://code.createjs.com/1.0.0/tweenjs.min.js"></script>
   <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-
-
-  <!-- <script src="./node_modules/pixi-tween/src/TweenManager.js"></script> -->
 <body>
   <script type="text/javascript">
-    // let type = "WebGL"
-    // if(!PIXI.utils.isWebGLSupported()){
-    //   type = "canvas"
-    // }
-
-    // PIXI.utils.sayHello(type)
-    // import tweenManager from pixi-tween;
-    // let TweenManager=new TweenManager()
     let app = new PIXI.Application({ 
-    width: 650,         // default: 800
-    height: 650,        // default: 600
-    antialias: true,    // default: false
-    transparent: false, // default: false
-    resolution: 1       // default: 1
+    width: 650,         
+    height: 650,       
+    antialias: true,    
+    transparent: true, 
+    resolution: 1       
   }
 
 );
@@ -43,7 +32,6 @@ PIXI.loader
   .load(setup);
 
 
-//This `setup` function will run when the image has loaded
 let map = new Map();
 
 
@@ -56,57 +44,44 @@ green = new PIXI.Sprite(PIXI.loader.resources["images/green.png"].texture);
 
 function setup() {
 
-//Create the `cat` sprite
  
 red = new PIXI.Sprite(PIXI.loader.resources["images/red.png"].texture);
 blue = new PIXI.Sprite(PIXI.loader.resources["images/blue.png"].texture);
 yellow = new PIXI.Sprite(PIXI.loader.resources["images/yellow.jpg"].texture);
 green = new PIXI.Sprite(PIXI.loader.resources["images/green.png"].texture);
-//Change the sprite's position
 console.log(red)
 red.x = 0;
 red.y = 0;
 
-//Change the sprite's size
 red.width = 256;
 red.height = 256;
 
-//Add the cat to the stage so you can see it
 app.stage.addChild(red);
  
-//Change the sprite's position
 blue.x = 306;
 blue.y = 0;
 
-//Change the sprite's size
 blue.width = 256;
 blue.height = 256;
 
-//Add the cat to the stage so you can see it
 app.stage.addChild(blue);
 
  
 
-//Change the sprite's position
 yellow.x = 0;
 yellow.y = 306;
 
-//Change the sprite's size
 yellow.width = 256;
 yellow.height = 256;
 
-//Add the cat to the stage so you can see it
 app.stage.addChild(yellow);
  
-//Change the sprite's position
 green.x = 306;
 green.y = 306;
 
-//Change the sprite's size
 green.width = 256;
 green.height = 256;
 
-//Add the cat to the stage so you can see it
 app.stage.addChild(green);
 map.set(1, red);     
 map.set(2, blue); 
@@ -164,7 +139,6 @@ function getSequence()
     sequence.push(yellow);
     inputSequence.push("yellow");
   }
-  console.log("sequence",sequence);
   animate(sequence);
 }
 let flag=0;
@@ -304,7 +278,6 @@ function check(couunt){
 function error()
 {
   console.log("Incorrect sequence please watch the sequence and try again")
-  //alert("Incorrect sequence please watch the sequence and try again");
   animate(sequence)
 }
 setInterval(function () {
