@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <h1 id="chance"></h1>
 </head>
   <script src="pixi.min.js"></script>
   <script src="Tween.js"></script>
@@ -138,31 +139,53 @@ function loadProgressHandler() {
 var time =1;
 var count=time;
 let sequence=[];
+let userAnswer=[];
+let inputSequence=[];
 function getSequence()
 {
   let value=Math.floor(Math.random() * 4)+1;
-  console.log(red);
 
   if(value==1)
   {
     sequence.push(red);
+    inputSequence.push("red");
   }
   else if(value==2)
   {
     sequence.push(blue);
+    inputSequence.push("blue");
   }
   else if(value==3)
   {
     sequence.push(green);
+    inputSequence.push("green");
   }
   else{
     sequence.push(yellow);
+    inputSequence.push("yellow");
   }
   console.log("sequence",sequence);
   animate(sequence);
 }
+let flag=0;
 async function animate(sequence)
 {
+  document.getElementById("chance").innerHTML = "Computer's turn";
+  red.off('mousedown', onDown);
+  red.off('mouseup', onUp);
+  red.off('touchstart', onDown1);
+  //blue.interactive = true;
+  blue.off('mousedown', onDown1);
+  blue.off('mouseup', onUp1);
+  blue.off('touchstart', onDown1);
+  //green.interactive = true;
+  green.off('mousedown', onDown2);
+  green.off('mouseup', onUp2);
+  green.off('touchstart', onDown2);
+  //yellow.interactive = true;
+  yellow.off('mousedown', onDown3);
+  yellow.off('mouseup', onUp3);
+  yellow.off('touchstart', onDown3);
     for(let i=0;i<sequence.length;i++)
     {
 
@@ -170,6 +193,24 @@ async function animate(sequence)
       await timer(2000);
 
     }
+    red.interactive = true;
+    red.on('mousedown', onDown);
+    red.on('mouseup', onUp);
+    red.on('touchstart', onDown1);
+    blue.interactive = true;
+    blue.on('mousedown', onDown1);
+    blue.on('mouseup', onUp1);
+    blue.on('touchstart', onDown1);
+    green.interactive = true;
+    green.on('mousedown', onDown2);
+    green.on('mouseup', onUp2);
+    green.on('touchstart', onDown2);
+    yellow.interactive = true;
+    yellow.on('mousedown', onDown3);
+    yellow.on('mouseup', onUp3);
+    yellow.on('touchstart', onDown3);
+    flag=1;
+    document.getElementById("chance").innerHTML = "Your turn";
 }
 
   function play(sq){
@@ -204,21 +245,25 @@ function onDown3 (eventData) {
   yellow.alpha=0.5
 }
 function onUp (eventData) {
+  userAnswer.push("red");
 red.alpha=1;
 count--;
 check(count);
 }
 function onUp1 (eventData) {
+  userAnswer.push("blue");
   blue.alpha=1;
   count--;
   check(count);
 }
 function onUp2 (eventData) {
+  userAnswer.push("green");
   green.alpha=1;
   count--;
   check(count);
 }
 function onUp3 (eventData) {
+  userAnswer.push("yellow");
   yellow.alpha=1;
   count--;
   check(count);
@@ -226,14 +271,41 @@ function onUp3 (eventData) {
 function check(couunt){
   if(count<=0)
   {
-    console.log("Round", time, "done");
-    time++;
-    count=time;
-    setTimeout(function(){
-      getSequence();
-},300);
-  }
+    console.log(userAnswer)
+    if(JSON.stringify(userAnswer)==JSON.stringify(inputSequence))
+    {
+      console.log("Round", time, "done");
+      while(userAnswer.length > 0) {
+          userAnswer.pop();
+      }
+        time++;
+        count=time;
+        setTimeout(getSequence,1000);
+      
+    }
+    else{
+      count=time;
+      while(userAnswer.length > 0) {
+          userAnswer.pop();
+      }
+      // 
+      
+      setTimeout(error,2000);  
+      alert("Incorrect sequence please watch the sequence and try again");
+      
+       }
 
+
+  }
+    
+    
+
+}
+function error()
+{
+  console.log("Incorrect sequence please watch the sequence and try again")
+  //alert("Incorrect sequence please watch the sequence and try again");
+  animate(sequence)
 }
 setInterval(function () {
   seconds++;
