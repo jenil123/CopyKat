@@ -1,5 +1,6 @@
 # PlayPowerLabs-Assignment
 Made replica of copyKat Game in pixi.
+
 The working is as follows:
 1. Open the link : https://jenil123.github.io/PlayPowerLabs-Assignment/
 2. The game will start and the sequence of sprites will be highlighted by animation.
