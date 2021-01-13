@@ -1,5 +1,5 @@
-# PlayPowerLabs-Assignment
-Made replica of copyKat Game in pixi.
+
+Made replica of copyKat Game in Pixijs.
 
 The working is as follows:
 1. Open the link : https://jenil123.github.io/PlayPowerLabs-Assignment/
